@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: wiseu_license
+    password: Mnwise4210#
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  logging:
+    level:
+      org.hibernate.SQL: debug
+      org.hibernate.type: trace
+
