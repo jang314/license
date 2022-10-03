@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "XSERVER_INFO")
-public class Server {
+public class Server extends BaseEntity{
     @Id
     @GeneratedValue
     @Column(name = "server_id")

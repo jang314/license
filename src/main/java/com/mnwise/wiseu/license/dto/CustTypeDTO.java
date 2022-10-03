@@ -11,12 +11,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class CustTypeDTO {
     private Long id;
-    @Valid
-    @Pattern(regexp = "^[가-힣||[/]]", message = "명명 규칙은 한글 혹은 구분자('/')만 허용 가능합니다.")
     private String name;
 
-    @Builder
-    public CustTypeDTO(String name) {
-        this.name = name;
-    }
 }
+

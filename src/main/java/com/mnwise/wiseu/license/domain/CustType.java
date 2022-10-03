@@ -1,15 +1,19 @@
 package com.mnwise.wiseu.license.domain;
 
-import lombok.Data;
+import lombok.*;
+
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "XCUST_TYPE_INFO")
-@Data
-public class CustType {
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CustType extends BaseEntity {
+
     @Id
     @GeneratedValue
     @Column(name = "cust_type_id")
