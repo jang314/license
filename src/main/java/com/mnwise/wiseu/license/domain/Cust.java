@@ -12,9 +12,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@ToString(exclude = "licenses")
 public class Cust extends BaseEntity{
     @Id
-//    @GeneratedValue
     @Column(name = "cust_id")
     private String id;
     private String name;
@@ -23,21 +23,24 @@ public class Cust extends BaseEntity{
     private Address address;
     private String memo;
 
-    @OneToMany(mappedBy = "cust")
-    private List<CustProd> custProds = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cust_type_id")
     private CustType custType;
 
-    @OneToMany(mappedBy = "cust")
-    private List<Member> members = new ArrayList<>();
+    @OneToMany(mappedBy = "cust", cascade = CascadeType.ALL)
+    private List<License> licenses = new ArrayList<>();
 
-    public void setCustType(CustType custType) {
-        this.custType = custType;
-        custType.getCusts().add(this);
+    @OneToMany(mappedBy = "cust", cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
+
+    public void addLicense(License license) {
+        licenses.add(license);
+        license.setCust(this);
     }
 
-
-
+    public void addUser(User user) {
+        users.add(user);
+        user.setCust(this);
+    }
 }

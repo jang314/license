@@ -23,8 +23,8 @@ public class BaseEntity {
         LocalDateTime now = LocalDateTime.now();
         insDate = now;
         updDate = now;
-    }
 
+    }
     @PreUpdate
     public void preUpdate() {
         updDate = LocalDateTime.now();

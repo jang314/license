@@ -2,7 +2,6 @@ package com.mnwise.wiseu.license.service;
 
 import com.mnwise.wiseu.license.domain.Product;
 import com.mnwise.wiseu.license.dto.ProductDTO;
-import com.mnwise.wiseu.license.repository.CustJpaRepository;
 import com.mnwise.wiseu.license.repository.ProdRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProdService {
     private final ProdRepository prodRepository;
-    private final CustJpaRepository custJpaRepository;
+
 
     @Transactional
     public void save(ProductDTO productDTO) {

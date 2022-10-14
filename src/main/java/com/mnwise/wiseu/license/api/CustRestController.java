@@ -1,5 +1,6 @@
 package com.mnwise.wiseu.license.api;
 
+import com.mnwise.wiseu.license.domain.Product;
 import com.mnwise.wiseu.license.dto.CustDTO;
 import com.mnwise.wiseu.license.service.CustService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,11 @@ public class CustRestController {
     public CustDTO save(@RequestBody CustDTO custDTO) {
         System.out.println("cust : " +custDTO.toString());
         custService.save(custDTO);
+        return custDTO;
+    }
+    @RequestMapping(value="/api/cust", method = RequestMethod.PUT)
+    public CustDTO update(@RequestBody CustDTO custDTO) {
+        custService.update(custDTO);
         return custDTO;
     }
 }

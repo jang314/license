@@ -17,6 +17,5 @@ public class ProductRestController {
     public ProductDTO save(@RequestBody ProductDTO productDTO) {
         prodService.save(productDTO);
         return productDTO;
-
     }
 }

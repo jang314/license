@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CustTypeRepository extends JpaRepository<CustType, Long> {
-    List<CustType> findByName(String name);
+    boolean existsByName(String name);
 }

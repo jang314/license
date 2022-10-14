@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Slf4j
+@ToString(exclude = "licenses")
 public class Product extends BaseEntity{
     @Id
     @Column(name = "prod_id")
@@ -25,23 +26,11 @@ public class Product extends BaseEntity{
     private String product;
     private String version;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CustProd> custProds = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<License> licenses = new ArrayList<>();
 
-    public void addCustProd(CustProd custProd) {
-        custProds.add(custProd);
-        custProd = CustProd.builder().product(this).build();
+    public void addLicense(License license) {
+        licenses.add(license);
+        license.setProduct(this);
     }
-
-    public static Product createProduct (CustProd... custProds) {
-        Product product = Product.builder().build();
-        for(CustProd custProd : custProds) {
-            product.addCustProd(custProd);
-        }
-        product.setInsDate(LocalDateTime.now());
-        product.setInsUser("jang314@mnwise.com");
-        return product;
-    }
-
 }

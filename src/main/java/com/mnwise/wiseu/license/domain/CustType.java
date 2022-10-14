@@ -15,13 +15,13 @@ import java.util.List;
 public class CustType extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cust_type_id")
     private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "custType")
+    @OneToMany(mappedBy = "custType", cascade = CascadeType.ALL)
     private List<Cust> custs = new ArrayList<>();
 
 }
