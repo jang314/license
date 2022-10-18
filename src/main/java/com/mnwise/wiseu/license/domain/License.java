@@ -60,7 +60,7 @@ public class License {
         this.hostNm = licenseDto.getHostNm();
         licenseDto.getServers().stream().map(map -> {
             Server server = Server.builder()
-                    .port(map.getPort())
+                    .port(String.valueOf(map.getPort()))
                     .build()
                     .makeSid(map.getSid(), map.getIdx())
                     ;
@@ -86,8 +86,6 @@ public class License {
     public License makeLicenseKey(Cust cust, Product product) {
         cust.addLicense(this);
         product.addLicense(this);
-
-
         return this;
     }
 }

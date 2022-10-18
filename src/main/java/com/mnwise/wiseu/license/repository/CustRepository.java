@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustRepository extends JpaRepository<Cust, String> {
+    boolean existsByNameAndCustTypeId(String name, Long custTypeId);
+    boolean existsById(String custId);
 }

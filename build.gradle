@@ -35,6 +35,7 @@ dependencies {
 //querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
     compileOnly 'org.projectlombok:lombok'

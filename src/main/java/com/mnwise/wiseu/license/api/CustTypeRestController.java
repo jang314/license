@@ -1,7 +1,10 @@
 package com.mnwise.wiseu.license.api;
 
+import com.mnwise.wiseu.license.domain.Cust;
 import com.mnwise.wiseu.license.domain.CustType;
+import com.mnwise.wiseu.license.dto.CustDTO;
 import com.mnwise.wiseu.license.dto.CustTypeDTO;
+import com.mnwise.wiseu.license.service.CustService;
 import com.mnwise.wiseu.license.validator.Message;
 import com.mnwise.wiseu.license.service.CustTypeService;
 import com.mnwise.wiseu.license.validator.CustTypeValidator;
@@ -9,11 +12,13 @@ import com.mnwise.wiseu.license.validator.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -23,6 +28,16 @@ import java.util.List;
 public class CustTypeRestController {
     private final CustTypeService custTypeService;
     private final CustTypeValidator validator;
+    private final CustService custService;
+
+//    @PostConstruct
+//    public void init() {
+//        for(long i = 0 ; i < 100; i++) {
+//            Long custTypeId = custTypeService.save(CustType.builder().id(i)
+//                    .name("유형"+i).build());
+//
+//        }
+//    }
 
     @RequestMapping(value = "/api/cust_type", method = {RequestMethod.POST, RequestMethod.PUT})
     public ResponseEntity<Message> save(@RequestBody @Valid CustTypeDTO custTypeDTO, BindingResult result) {
@@ -52,14 +67,11 @@ public class CustTypeRestController {
         }
     }
 
-    @GetMapping("/api/cust_type/{id}")
-    public CustTypeDTO findOne(@PathVariable Long id) {
-        return custTypeService.findOne(id);
-    }
 
-//    @GetMapping("/api/cust_type")
-//    public Page<CustTypeDTO> selectCustType(@RequestBody CustTypeDTO custTypeDTO) {
-//
-//    }
+    @GetMapping("/api/cust_type")
+    public ResponseEntity<Page<CustTypeDTO>> findList(Pageable pageable, String name) {
+        Page<CustTypeDTO> list = custTypeService.findList(pageable, name);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
 }

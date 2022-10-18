@@ -29,6 +29,7 @@ public class Product extends BaseEntity{
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<License> licenses = new ArrayList<>();
 
+
     public void addLicense(License license) {
         licenses.add(license);
         license.setProduct(this);

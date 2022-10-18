@@ -2,14 +2,14 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521:XE
+    url: jdbc:mysql://10.0.1.103:3306/wiseu_license?characterEncoding=utf8&autoReconnect=true
     username: wiseu_license
-    password: Mnwise4210#
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    password: wiseu_license
+    driver-class-name: com.mysql.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

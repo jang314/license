@@ -9,5 +9,5 @@ import javax.persistence.EntityManager;
 
 @Repository
 public interface ProdRepository extends JpaRepository<Product, String> {
-
+    boolean existsByProductAndVersion(String product, String version);
 }
