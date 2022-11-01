@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 public class LicenseDTO {
     @NotNull(message = "고객사는 필수 선택 사항입니다.")
-    private String custId;
+    private Long custId;
 
     @NotNull(message = "제품은 필수 선택 사항입니다.")
     private String product;

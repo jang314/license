@@ -15,8 +15,9 @@ import java.util.List;
 @ToString(exclude = "licenses")
 public class Cust extends BaseEntity{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cust_id")
-    private String id;
+    private Long id;
     private String name;
 
     @Embedded

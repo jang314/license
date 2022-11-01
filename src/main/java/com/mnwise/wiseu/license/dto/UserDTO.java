@@ -8,7 +8,7 @@ public class UserDTO {
     private String email;
     private String password;
     private String name;
-    private String custId;
+    private Long custId;
     private Auth auth;
 
 }

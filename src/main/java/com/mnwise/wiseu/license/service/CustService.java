@@ -1,6 +1,7 @@
 package com.mnwise.wiseu.license.service;
 
 import com.mnwise.wiseu.license.domain.Cust;
+import com.mnwise.wiseu.license.domain.CustType;
 import com.mnwise.wiseu.license.dto.*;
 import com.mnwise.wiseu.license.dto.condition.CustSearchCond;
 import com.mnwise.wiseu.license.dto.query.CustQueryDTO;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.mnwise.wiseu.license.domain.QCust.*;
 
@@ -32,11 +34,49 @@ public class CustService {
 
 
     @Transactional
-    public String save(CustDTO custDTO) {
-        Cust cust = Cust.builder()
-                .custType(custTypeRepository.findById(custDTO.getCustType()).get())
-                .id(String.format("%05d", custDTO.getCustType())).name(custDTO.getName()).build();
-        return custRepository.save(cust).getId();
+    public Long save(CustDTO custDTO) throws Exception {
+        Optional<CustType> custType = custTypeRepository.findById(custDTO.getCustType());
+
+        if(custType.isPresent()) {
+            if(custDTO.getCustId() != null) {
+                Optional<Cust> byId = custRepository.findById(custDTO.getCustId());
+                if(byId.isPresent()) {
+                    return custRepository.save(Cust.builder()
+                            .id(byId.get().getId())
+                            .name(custDTO.getName())
+                            .custType(custType.get())
+                            .build()).getId() ;
+                } else {
+                    throw new IllegalAccessException("존재하지 않는 고객사입니다.");
+                }
+            } else {
+                // 등록 로직
+                return custRepository.save(Cust.builder().custType(custType.get()).name(custDTO.getName()).build()).getId();
+            }
+        } else {
+            throw new IllegalAccessException("존재하지 않는 고객사 유형입니다.");
+        }
+    }
+
+    @Transactional
+    public Long update(CustDTO custDTO) throws Exception {
+        Optional<Cust> byId = custRepository.findById(custDTO.getCustId());
+        if(byId.isPresent()) {
+            // 고객사 명 중복 일어나면 안됨..
+        } else {
+
+        }
+
+
+        Optional<CustType> custType = custTypeRepository.findById(custDTO.getCustType());
+        if(custType.isPresent()) {
+            Cust cust = Cust.builder()
+                    .custType(custType.get())
+                    .name(custDTO.getName()).build();
+            return custRepository.save(cust).getId();
+        } else {
+            throw new IllegalAccessException("존재하지 않는 고객사 유형입니다.");
+        }
     }
 
     public boolean existsByNameAndCustType(String name, Long custType) {
@@ -90,7 +130,7 @@ public class CustService {
         return StringUtils.hasText(custNm) ?  cust.name.contains(custNm) : null;
     }
 
-    public boolean existsById(String custId) {
+    public boolean existsById(Long custId) {
         return custRepository.existsById(custId);
     }
 }

@@ -7,6 +7,7 @@ import com.mnwise.wiseu.license.service.CustService;
 import com.mnwise.wiseu.license.validator.CustValidator;
 import com.mnwise.wiseu.license.validator.Message;
 import com.mnwise.wiseu.license.validator.Status;
+import com.mnwise.wiseu.license.validator.UpdateCheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -31,21 +33,58 @@ public class CustRestController {
 
     }
 
-    @RequestMapping(value = "/api/cust", method = {RequestMethod.POST, RequestMethod.PUT})
+    @PostMapping("/api/cust")
     public ResponseEntity<Message> save(@RequestBody @Valid CustDTO custDTO, BindingResult result) {
         Message.MessageBuilder builder = Message.builder();
         try {
             this.validator.validate(custDTO, result);
-            if(result.hasErrors()) {
+            if (result.hasErrors()) {
                 builder = builder
                         .message(result.getFieldError().getDefaultMessage())
                         .code(Status.BAD_REQUEST);
             } else {
-                String id = custService.save(custDTO);
+                custDTO.setCustId(null);
+                Long id = custService.save(custDTO);
                 builder = builder.message("정상적으로 처리되었습니다.")
                         .code(Status.OK)
                         .data(id);
             }
+        } catch (IllegalAccessException e){
+            builder = Message.builder()
+                    .code(Status.BAD_REQUEST)
+                    .message(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            builder = Message.builder()
+                    .code(Status.SERVER_ERROR)
+                    .message("서버에러 => " + e.toString());
+            log.error(e.toString());
+        } finally {
+            return new ResponseEntity<>(builder.build(),
+                    builder.build().getCode().equals("200") ?
+                            HttpStatus.OK : HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/api/cust")
+    public ResponseEntity<Message> update(@RequestBody @Validated(UpdateCheck.class) CustDTO custDTO, BindingResult result) {
+        Message.MessageBuilder builder = Message.builder();
+        try {
+            this.validator.validate(custDTO, result);
+            if (result.hasErrors()) {
+                builder = builder
+                        .message(result.getFieldError().getDefaultMessage())
+                        .code(Status.BAD_REQUEST);
+            } else {
+                Long id = custService.save(custDTO);
+                builder = builder.message("정상적으로 처리되었습니다.")
+                        .code(Status.OK)
+                        .data(id);
+            }
+        } catch (IllegalAccessException e){
+            builder = Message.builder()
+                    .code(Status.BAD_REQUEST)
+                    .message(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             builder = Message.builder()

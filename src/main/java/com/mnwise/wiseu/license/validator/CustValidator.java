@@ -27,7 +27,7 @@ public class CustValidator implements Validator {
 //        }
 
         if(custService.existsByNameAndCustType(custDTO.getName(), custDTO.getCustType())) {
-            errors.rejectValue("name", Status.BAD_REQUEST.name(),"유형명은 중복될 수 없습니당.");
+            errors.rejectValue("name", Status.BAD_REQUEST.name(),"고객사 명은 중복될 수 없습니당.");
         }
 
 
