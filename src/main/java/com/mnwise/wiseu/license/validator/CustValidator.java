@@ -22,9 +22,9 @@ public class CustValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         CustDTO custDTO = (CustDTO) target;
-        if(custTypeService.findById(custDTO.getCustType()) == 0L) {
-            errors.rejectValue("name", Status.BAD_REQUEST.name(),"존재하지 않는 유형입니다, 재 선택해주세요.");
-        }
+//        if(custTypeService.findById(custDTO.getCustType())) {
+//            errors.rejectValue("name", Status.BAD_REQUEST.name(),"존재하지 않는 유형입니다, 재 선택해주세요.");
+//        }
 
         if(custService.existsByNameAndCustType(custDTO.getName(), custDTO.getCustType())) {
             errors.rejectValue("name", Status.BAD_REQUEST.name(),"유형명은 중복될 수 없습니당.");

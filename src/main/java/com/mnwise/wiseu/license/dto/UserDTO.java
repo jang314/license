@@ -1,8 +1,7 @@
 package com.mnwise.wiseu.license.dto;
 
-import com.mnwise.wiseu.license.domain.Auth;
+import com.mnwise.wiseu.license.domain.code.Auth;
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 public class UserDTO {

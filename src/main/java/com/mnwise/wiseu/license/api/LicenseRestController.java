@@ -48,7 +48,7 @@ public class LicenseRestController {
         } catch (Exception e) {
             builder = Message.builder()
                     .code(Status.SERVER_ERROR)
-                    .message("서버에러 => " + e.toString());
+                    .message("서버에러,  " + e.toString());
             log.error(e.toString());
         } finally {
             return new ResponseEntity<>(builder.build(),

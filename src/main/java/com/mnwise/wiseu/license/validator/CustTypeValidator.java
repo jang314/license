@@ -12,6 +12,7 @@ import org.springframework.validation.Validator;
 import javax.validation.ConstraintViolation;
 import javax.validation.executable.ExecutableValidator;
 import javax.validation.metadata.BeanDescriptor;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -27,6 +28,7 @@ public class CustTypeValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         CustTypeDTO custTypeDTO = (CustTypeDTO) target;
+
         if(custTypeService.existsByName(custTypeDTO.getName())) {
             errors.rejectValue("name", Status.BAD_REQUEST.name(),"유형명은 중복될 수 없습니당.");
         }

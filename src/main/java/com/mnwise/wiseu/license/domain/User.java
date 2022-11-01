@@ -1,5 +1,6 @@
 package com.mnwise.wiseu.license.domain;
 
+import com.mnwise.wiseu.license.domain.code.Auth;
 import com.mnwise.wiseu.license.dto.UserDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -4,6 +4,7 @@ import com.mnwise.wiseu.license.domain.Cust;
 import com.mnwise.wiseu.license.dto.*;
 import com.mnwise.wiseu.license.dto.condition.CustSearchCond;
 import com.mnwise.wiseu.license.dto.query.CustQueryDTO;
+import com.mnwise.wiseu.license.dto.query.QCustQueryDTO;
 import com.mnwise.wiseu.license.repository.CustRepository;
 import com.mnwise.wiseu.license.repository.CustTypeRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;

@@ -37,8 +37,24 @@ public class CustTypeService {
     private final JPAQueryFactory queryFactory;
 
     @Transactional
-    public Long save(CustType custType) {
-        return custTypeRepository.save(custType).getId();
+    public Long save(CustTypeDTO custTypeDto) throws Exception {
+
+        // 수정 로직 (데이터가 존재하지 않으면 insert하게 할 수 없다.)
+        if(custTypeDto.getId() != null) {
+            Optional<CustType> byId = custTypeRepository.findById(custTypeDto.getId());
+            if(byId.isPresent()) {
+                return custTypeRepository.save(CustType.builder()
+                        .name(custTypeDto.getName())
+                        .id(byId.get().getId())
+                        .build()).getId();
+            } else {
+                throw new IllegalAccessException("데이터가 존재하지 않습니다.");
+            }
+        } else {
+            return custTypeRepository.save(CustType.builder()
+                            .name(custTypeDto.getName())
+                            .build()).getId();
+        }
     }
 
     @Transactional
@@ -47,9 +63,9 @@ public class CustTypeService {
     }
 
 
-    public Long findById(Long id) {
-        return Optional.ofNullable(custTypeRepository.findById(id).get().getId())
-                .orElse(0L);
+    public CustTypeDTO findById(Long id) {
+        return CustTypeDTO.builder().custType(Optional.ofNullable(custTypeRepository.findById(id)).get().get()).build();
+
     }
 
     public Page<CustTypeDTO> findList(Pageable pageable, String name) {
